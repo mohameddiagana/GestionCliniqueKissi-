@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import sn.seck.GestionCliniqueKissi.Model.Patient;
 
 @Repository
-@CrossOrigin("*")/*PERMIT D'ACCEPTER LES REQUETE*/
+//@CrossOrigin("*")/*PERMIT D'ACCEPTER LES REQUETE*/
 public interface PatientRepository extends JpaRepository<Patient,Integer> {
   @Query(value = "SELECT p FROM Patient p WHERE p.nomp =:nomp")
-    public Patient findByPatient(@Param("nomp")String nomp);
+     Patient findByPatient(@Param("nomp")String nomp);
 }

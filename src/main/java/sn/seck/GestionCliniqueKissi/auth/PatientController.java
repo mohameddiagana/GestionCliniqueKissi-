@@ -1,7 +1,6 @@
 package sn.seck.GestionCliniqueKissi.auth;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +11,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @Slf4j
 @Controller
-@RequestMapping("http://localhost:4200/api/v1/auth/patient/liste")
+@RequestMapping("http://localhost:7075/api/v1/auth/patient/liste")
 public class PatientController {
     //@Autowired
     private PatientRepository patientRepository;
 
     public PatientController(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
+
     }
 
 
@@ -31,12 +31,13 @@ public class PatientController {
         log.info("Fetching all patients");
         map.addAttribute("list_patients", patientRepository.findAll( ));//Pour la liste
         map.addAttribute("Patient", new Patient( ));//Pour le formulaire
-       return "/patient/liste";
+      //return "/patient/liste";
+       return getPatientList.toString();
       
  }
 
     @DeleteMapping(value = "/patient/delete")
-    public String deletepatient(int idpatient) {
+    public String deletepatient( int idpatient) {
         try {
             patientRepository.delete(patientRepository.getById(idpatient));
             log.info("DELETE THE PATIENT !");
@@ -50,7 +51,7 @@ public class PatientController {
 
     @RequestMapping(value = "/patient/add",method = RequestMethod.POST)
 
-    public String NouveauPatient(int idpatient, String codep, String nomp, String prenom, String adresse, String email, String tel, String sexe, LocalDate datenaissance, String profession, int CIN, int age) {//ajout et mise à jour
+    public String NouveauPatient(int idpatient, int codep, String nomp, String prenom, String adresse, String email, String tel, String sexe, LocalDate datenaissance, String profession, int CIN, int age/*String rendezvous*/) {//ajout et mise à jour
         log.info("Saving New Patient in database{}", patientRepository.findByPatient(nomp));
         Patient patient = new Patient( );
         patient.setIdpatient(idpatient);
@@ -66,7 +67,6 @@ public class PatientController {
         patient.setProfession(profession);
         patient.setCIN(CIN);
         patient.setAge(age);
-
         try {
             patientRepository.saveAndFlush(patient);
         } catch (Exception ex) {

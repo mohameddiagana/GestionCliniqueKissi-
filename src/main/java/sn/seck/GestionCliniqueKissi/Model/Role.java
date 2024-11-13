@@ -9,7 +9,9 @@ public enum Role {
     User,
     ADMIN,
     MANAGER,
-    COMPTABLE
+    COMPTABLE,
+    IT,
+    DEVELOPPEUR
 //    USER(Collections.emptySet()) ,
 //    ADMIN(
 //            Set.of(

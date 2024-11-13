@@ -29,6 +29,7 @@
                     <th>profession></th>
                     <th>CIN</th>
                     <th>age</th>
+                    <th>rendezvous</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                     <td th:text="${p.profession}"></td>
                     <td th:text="${p.CIN}"></td>
                     <td th:text="${p.age}"></td>
+                    <td th:text="${p.rendezvous}"></td>
                     <td>
                         <a class="btn btn-primary"
                            th:href="@{/api/v1/auth/patient/edit(idpatient=${p.idpatient})}">Edit
@@ -98,6 +100,15 @@
 
                     <label> Age :</label>
                     <input type="text" name="age" th:field="*{age}"/>
+
+<!--                    <div class="form-group">-->
+<!--                        <label class="control-label">Rendez-vous</label>-->
+<!--                        <select class="form-control" type="select" name="name">-->
+
+<!--                            <option value="0">Faite votre choix</option>-->
+<!--                            <option th:each="r:${list_rendezvous}"  th:text="${p.rendezvous}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
 
 
                     <select name="sexe" required>

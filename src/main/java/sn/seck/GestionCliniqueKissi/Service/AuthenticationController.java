@@ -2,6 +2,7 @@ package sn.seck.GestionCliniqueKissi.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +11,7 @@ import sn.seck.GestionCliniqueKissi.auth.AuthenticationRequest;
 import sn.seck.GestionCliniqueKissi.auth.AuthenticationResponse;
 import sn.seck.GestionCliniqueKissi.auth.RegisterRequest;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {

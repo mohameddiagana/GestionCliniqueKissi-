@@ -3,8 +3,8 @@ services:
     container_name: postgres-sql
     image: postgres
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: diagana
+      POSTGRES_PASSWORD: diagana
       #PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres

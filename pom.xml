@@ -47,7 +47,6 @@
 			<version>3.1.1</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
@@ -176,12 +175,10 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-
 <!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-docker-composer</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--			<optional>true</optional>-->
+<!--			<groupId>joda-time</groupId>-->
+<!--			<artifactId>joda-time</artifactId>-->
+<!--			<version>2.13.0</version>-->
 <!--		</dependency>-->
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-resource-server -->

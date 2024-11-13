@@ -32,6 +32,7 @@ public class ApplicationConfig {
         return authprovider;
 
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration conf) throws Exception {
         return conf.getAuthenticationManager();

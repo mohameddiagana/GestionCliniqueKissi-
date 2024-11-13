@@ -1,25 +1,25 @@
 package sn.seck.GestionCliniqueKissi.Model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.*;
 
 
 @Getter
 @Setter
 @Entity
+@ToString
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Builder
 @Table(name = "patient",
 uniqueConstraints =
 @UniqueConstraint(columnNames = "email"))
@@ -28,45 +28,62 @@ public class Patient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idpatient;
-    @Column(name = "codep",nullable = false,length = 150)
-    private String codep;
-    @Column(name = "nomp",nullable = false,length = 150)
+    @Column(name = "codep", length = 200)
+    private int codep;
+    @Column(name = "nomp" ,length = 200)
     private String nomp;
-    @Column(name = "prenom",nullable = false,length = 150)
+    @Column(name = "prenom", length = 200)
     private String prenom;
-    @Column(name = "email")
-    @NotBlank(message = "entrer vos mail")
-    @Email(message = "email de dois pas etre null")
+    @Column(name = "email", length = 250)
+    @Email(message = "Email ne dois pas etre null")
     private String email;
-    @Column(name = "tel")
+    @Column(name = "tel",length = 200)
     private String tel;
-    @Column(name = "sexe")
+    @Column(name = "sexe", length = 200)
     private String sexe;
     @Column(name = "datenaissance")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "GMT")
     @CreatedDate
     private LocalDate datenaissance;
-    @Column(name = "adresse")
+    @Column(name = "adresse", length = 200)
     private String adresse;
-    @Column(name = "profession")
+    @Column(name = "profession", length = 200)
     private String profession;
-    @Column(name = "CIN")
+    @Column(name = "CIN", length = 250)
     private int CIN;
     @Column(name = "age")
     private int age;
 
-//    public int getAge(LocalDate date, Date startDate, Date endDate) {
-//        LocalDate maintenant = LocalDate.now();
-//        LocalDate dateNaissance;
-//
-//        return Period.between(datenaissance, maintenant).getYears();
-//
-//    }
-    public Patient(int idpatient, int codep, String nomp, String prenom, String email, String tel, String sexe, LocalDate datenaissance, String adresse, String profession, int CIN, int age) {
+    @OneToMany(mappedBy = "patient" ,fetch = FetchType.LAZY)
+    private List<Rendezvous> rendezvous;
+
+
+    public Patient(int idpatient, int codep, String nomp, String prenom, String email, String tel, String sexe, LocalDate datenaissance, String adresse, String profession, int CIN, int age, String rendezvous) {
     }
+
     public String toString() {
-        return "Patient(idpatient=" + this.getIdpatient() + ", codep=" + this.getCodep() + ", nomp=" + this.getNomp() + ", prenom=" + this.getPrenom() + ", email=" + this.getEmail() + ", tel=" + this.getTel() + ", sexe=" + this.getSexe() + ", datenaissance=" + this.getDatenaissance() + ", adresse=" + this.getAdresse() + ", profession=" + this.getProfession() + ", CIN=" + this.getCIN() + ", age=" + this.getAge() + ")";
+        return "Patient(idpatient=" + this.getIdpatient() + ", codep=" + this.getCodep() + ", nomp=" + this.getNomp() + ", prenom=" + this.getPrenom() + ", email=" + this.getEmail() + ", tel=" + this.getTel() + ", sexe=" + this.getSexe() + ", datenaissance=" + this.getDatenaissance() + ", adresse=" + this.getAdresse() + ", profession=" + this.getProfession() + ", CIN=" + this.getCIN() + ", age=" + this.getAge() + ",rendezvous="+ this.getRendezvous();
     }
+    /*METHODE POUR CALCULER Age PAARTIR DATENAISSANCE*/
+   public static int getYears(Date datenaissance)
+    {
+        Calendar curr = Calendar.getInstance();
+        Calendar birth = Calendar.getInstance();
+        birth.setTime(datenaissance);
+        int yeardiff = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+        curr.add(Calendar.YEAR,-yeardiff);
+        if(birth.after(curr))
+        {
+            yeardiff = yeardiff - 1;
+        }
+        return yeardiff;
+       //return getYears(datenaissance);
+    }
+
+
+
+
+
 }
 
 

@@ -12,11 +12,10 @@ import sn.seck.GestionCliniqueKissi.Model.Patient;
 import sn.seck.GestionCliniqueKissi.Repository.PatientRepository;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
-@Transactional
 @Slf4j
+@Transactional
 @CacheConfig(cacheNames = "patients")
 public class PatientServiceImpl implements PatientService {
     private PatientRepository patientRepository;

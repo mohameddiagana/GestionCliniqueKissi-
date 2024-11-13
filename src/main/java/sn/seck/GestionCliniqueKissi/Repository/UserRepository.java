@@ -8,7 +8,7 @@ import sn.seck.GestionCliniqueKissi.Model.Users;
 
 import java.util.Optional;
 @Repository
-@CrossOrigin( "*")
+//@CrossOrigin( "*")
 public interface UserRepository extends JpaRepository<Users,Integer> {
     Optional<Users>findByEmail(String email);
 }

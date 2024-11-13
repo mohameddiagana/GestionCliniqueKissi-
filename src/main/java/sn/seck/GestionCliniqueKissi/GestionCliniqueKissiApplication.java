@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import sn.seck.GestionCliniqueKissi.Model.Patient;
-import sn.seck.GestionCliniqueKissi.Model.Role;
-import sn.seck.GestionCliniqueKissi.Model.Users;
+import sn.seck.GestionCliniqueKissi.Model.*;
+import sn.seck.GestionCliniqueKissi.Repository.ConsultationRepository;
+import sn.seck.GestionCliniqueKissi.Repository.MedecinRepository;
+import sn.seck.GestionCliniqueKissi.Repository.PatientRepository;
+import sn.seck.GestionCliniqueKissi.Repository.RendezvousRepository;
 import sn.seck.GestionCliniqueKissi.Service.AuthenticationService;
 import sn.seck.GestionCliniqueKissi.Service.PatientService;
 import sn.seck.GestionCliniqueKissi.Service.UserService;
@@ -22,6 +24,8 @@ import sn.seck.GestionCliniqueKissi.auth.RegisterRequest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Stream;
 
 @SpringBootApplication()
 @CrossOrigin(origins = "*")
@@ -30,17 +34,28 @@ import java.time.format.DateTimeFormatter;
 @ComponentScan(basePackages = {"sn.seck.GestionCliniqueKissi.Service"})
 @EnableJpaRepositories(value = "sn.seck.GestionCliniqueKissi.Repository")
 
-@ComponentScan(basePackages = "sn.seck.GestionCliniqueKissi.Model.Users")
+@ComponentScan(basePackages = "sn.seck.GestionCliniqueKissi.Model")
 @OpenAPIDefinition
 public class GestionCliniqueKissiApplication {
+
 		private UserService userService;
 		private PatientService patientService;
+		private MedecinRepository medecinRepository;
+		private RendezvousRepository rendezvousRepository;
+		private ConsultationRepository consultationRepository;
+		private PatientRepository patientRepository;
 
-
-	public GestionCliniqueKissiApplication(UserService userService, PatientService patientService) {
+	public GestionCliniqueKissiApplication(MedecinRepository medecinRepository,
+                                           UserService userService,
+                                           PatientService patientService, RendezvousRepository rendezvousRepository, ConsultationRepository consultationRepository, PatientRepository patientRepository) {
 		this.userService = userService;
 		this.patientService = patientService;
-	}
+		this.medecinRepository = medecinRepository;
+
+        this.rendezvousRepository = rendezvousRepository;
+        this.consultationRepository = consultationRepository;
+        this.patientRepository = patientRepository;
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(GestionCliniqueKissiApplication.class, args);
@@ -51,8 +66,7 @@ public class GestionCliniqueKissiApplication {
 
 		return args -> {
 
-
-			LocalDate date = LocalDate.now();
+			/*LocalDate date = LocalDate.now();
 			// Formater la date dans un format spécifique
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			String dateFormatted = date.format(formatter);
@@ -60,37 +74,77 @@ public class GestionCliniqueKissiApplication {
 			// Afficher la date dans le terminale
 			System.out.println("La date d'aujourd'hui est: " + dateFormatted);
 
+			 */
+			Patient patient = Patient.builder()
+						.idpatient(1)
+					.codep(2002)
+					.nomp("diagana")
+					.prenom("MOHAmed bocar")
+					.email("md@gmail.com")
+					.tel("784152522")
+					.sexe("Homme")
+					.datenaissance(LocalDate.now())
+					.adresse("sahm")
+					.profession("devops")
+					.CIN(545122412)
+					.age(58)
+					.rendezvous(new ArrayList<Rendezvous>())
+					.build();
 
-			userService.addNewUser(new Users( 1,"moha","diagana","mdiaganaisidk@gmail.com","1234", Role.ADMIN ));
-	userService.addNewUser(new Users( 2,"mohamed bocar","samba","assisi@gmail.sn","passer123", Role.User ));
-	userService.addNewUser(new Users( 4,"da bocar","cheikh","admin@gmail.sn","123", Role.ADMIN ));
-			patientService.addNewPatient(new Patient(2, "c124", "dahaba", "tandia ablaye", "dbtandia@gmail.com", "772512985", "homme",
-					LocalDate.now(), "sahm", "developpeur", 861254587, 20));
 
-			patientService.addNewPatient(new Patient(3, "c552","lala","tandia la","daha@gmail.com","772565225","femme",
-					LocalDate.now(),"police4","commercante",877878444,60));
-//
-			patientService.addNewPatient(new Patient(4, "c500","dada","daba tal",
-					"taldab@gmail.com","781454748","femme",
-					LocalDate.now(),"diourbelle","developpeuse",548852418,56));
-
-
-			patientService.addNewPatient(new Patient(5, "c521"," ba","yacoub",
-					"mame@gmail.com","782156844","femme",
-					LocalDate.now(),"castor","agriculeur",128621125,80));
-
-			patientService.addNewPatient(new Patient(6, "c51"," dddbaa","sarr",
-					"mae@gmail.com","458872593","male",
-					LocalDate.now(),"castor","culte",201104786,23));
+			patientRepository.saveAndFlush(patient);
 
 
 
 
 
+		userService.addNewUser(new Users(1, "moha", "diagana", "mdiaganaisidk@gmail.com", "1234", Role.ADMIN));
+		userService.addNewUser(new Users(2, "mohamed bocar", "samba", "assisi@gmail.sn", "passer123", Role.User));
+		userService.addNewUser(new Users(4, "da bocar", "cheikh", "admin@gmail.sn", "123", Role.ADMIN));
+		/*Liste des Medecins*/
+		Stream.of("Bocar", "zeyade", "BRAHIME", "youssouf")
+				.forEach(name -> {
+					Medecin medecin = new Medecin();
+					medecin.setId(1);
+					medecin.setCodemed("m002");
+					medecin.setFirstname("Bocar Bnnff");
+					medecin.setLastname("DIagana ");
+					medecin.setEmail("mddiag@gmail.com");
+					medecin.setTele("777885825");
+					medecin.setSexe("Homme");
+					Rendezvous rendezvous1 = new Rendezvous();
+                    medecin.setRendezvous(Collections.singletonList(rendezvous1));
+					medecinRepository.saveAndFlush(medecin);
+
+					/*Liste des Rendezvous*/
+					//medecin.speciali(Math.random()>0.5?"DENTAIRE":"CARDIO") UUID
+					Rendezvous rendezvous = new Rendezvous();
+					rendezvous.setId(1);
+					rendezvous.setCoderdv("c002");
+					rendezvous.setDaterdv(new Date());
+					rendezvous.setTyperdv("Consultation");
+					rendezvous.setHeurerdv(new Date());
+					rendezvous.setMedecin(medecin);
+					rendezvous.setPatient(new Patient());
+					rendezvousRepository.save(rendezvous);
+
+					//Rendezvous rendezvous1 = rendezvousRepository.findById(1).orElse(null);
+
+					Consultation consu = new Consultation();
+					consu.setId(1);
+					consu.setCodecons("c0025");
+					consu.setDateconsultation(new Date());
+					consu.setRapport("le Rapport de la semaine est.......:"+ consu.getRapport());
+					consultationRepository.save(consu);
+				});
+
+
+	};
 		};
 
 }
-}
+
+
 
 
 

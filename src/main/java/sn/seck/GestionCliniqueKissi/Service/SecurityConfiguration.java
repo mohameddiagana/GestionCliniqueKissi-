@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 
 @Configuration
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     private final JWTAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    //private final LogoutHandler logoutHandler;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -30,7 +32,7 @@ public class SecurityConfiguration {
                 .logoutSuccessUrl("logout_success.html")
                 .disable()
                 .authorizeHttpRequests()
-//               .requestMatchers("/USER/**").hasRole("USER")
+               .requestMatchers("/USER/**").hasRole("USER")
 //                .requestMatchers("/USER/**").hasRole("USER")
                 .requestMatchers(HttpMethod.POST,"http://localhost:7075/api/v1/auth/patient/liste/**"
                 ,"/swagger-ui.html","/swagger-ui/**","/v2/api-docs"," /v3/api-docs","/swagger-resources","/v3/api-docs/**",

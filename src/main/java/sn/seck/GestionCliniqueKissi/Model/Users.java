@@ -20,19 +20,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Table(name = "users")
 
 public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int iduser;
-    @Column(name = "firstname",length = 150)
+    @Column(name = "firstname",length = 30)
     private String firstname;
     @Column(name = "lastname",length = 150)
 
     private String lastname;
-    @Column(name = "email",length = 150)
+    @Column(name = "email",length = 250)
     private String email;
     @Column(name = "password",length = 100)
     private String password;

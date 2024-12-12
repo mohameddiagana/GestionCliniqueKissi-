@@ -1,8 +1,8 @@
 package sn.seck.GestionCliniqueKissi.Service;
 
 import jakarta.transaction.Transactional;
+
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import sn.seck.GestionCliniqueKissi.Repository.UserRepository;
 
 import java.util.List;
 @Service
+
 @Transactional
 @Slf4j
 @CacheConfig(cacheNames = "users")
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService {
    // @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
 
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users addNewUser(@RequestBody Users user) {
+    public Users createUser(@RequestBody Users user) {
         String pwdd = user.getPassword();
         user.setPassword(passwordEncoder.encode(pwdd));
         log.info("Saving new user {} to the database", user.getFirstname());
@@ -40,5 +43,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+//    @Override
+//    public Role addNewRole(@RequestBody Role role) {
+//        log.info("Saving new role {} to the database", role.name());
+//        return roleRepository.saveAndFlush(role);
+//    }
+  }
 
-}
+
+

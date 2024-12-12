@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 
 //@RequiredArgsConstructor
+
 public enum Role {
     User,
     ADMIN,
@@ -53,6 +54,15 @@ public enum Role {
 //        return  authorities;
 //
 //
+//    }
+//private final String displayName;
+//
+//    Role(String displayName) {
+//        this.displayName = displayName;
+//    }
+//
+//    public String getDisplayName() {
+//        return displayName;
 //    }
 }
 

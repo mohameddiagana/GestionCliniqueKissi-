@@ -3,8 +3,6 @@ package sn.seck.GestionCliniqueKissi.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -26,7 +24,7 @@ public class Medecin {
     private String firstname;
     @Column(name = "lastname",length = 200)
     private String lastname;
-    @Column(name = "email" , length = 250)
+    @Column(name = "email" , length = 250,unique = true)
     private String email;
     @Column(name = "tele",length = 200)
     private String tele;

@@ -17,11 +17,12 @@ import java.util.Date;
 public class Consultation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long idconsultation;
     @Column(name = "codecons",length = 150)
     private String codecons;
     @Temporal(TemporalType.DATE)    /*par defaut TIMESTAm*/
     private Date dateconsultation;
     @Column(name = "rapport",length = 150)
     private String rapport;
+   // private int prixconsultation;
 }

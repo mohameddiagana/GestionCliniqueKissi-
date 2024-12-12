@@ -30,6 +30,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
 		<dependency>
@@ -37,6 +41,7 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>3.0.2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -47,10 +52,11 @@
 			<version>3.1.1</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.thymeleaf.extras</groupId>-->
+<!--			<artifactId>thymeleaf-extras-springsecurity6</artifactId>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -105,7 +111,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/org.swagger/ -->
 
 		<dependency>
@@ -140,7 +145,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<version>1.18.34</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

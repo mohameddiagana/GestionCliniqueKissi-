@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-//@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")/*http://localhost:4200*/
 @Slf4j
 @Controller
-@RequestMapping("http://localhost:7075/api/v1/auth/patient/liste")
+@RequestMapping("localhost:7075/api/v1/auth/patient/liste")
 public class PatientController {
     //@Autowired
     private PatientRepository patientRepository;
@@ -31,8 +31,8 @@ public class PatientController {
         log.info("Fetching all patients");
         map.addAttribute("list_patients", patientRepository.findAll( ));//Pour la liste
         map.addAttribute("Patient", new Patient( ));//Pour le formulaire
-      //return "/patient/liste";
-       return getPatientList.toString();
+      return "/patient/liste";
+      // return getPatientList.toString();
       
  }
 
@@ -48,6 +48,11 @@ public class PatientController {
         return "redirect:/api/v1/auth/patient/liste";
 
     }
+
+//    @DeleteMapping("/patient/{idpatient}")
+//    public void delete(@PathVariable String idpatient) {
+//        patientRepository.delete(code);
+//    }
 
     @RequestMapping(value = "/patient/add",method = RequestMethod.POST)
 

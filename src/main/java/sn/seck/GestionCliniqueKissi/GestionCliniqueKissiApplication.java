@@ -4,37 +4,34 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import sn.seck.GestionCliniqueKissi.Model.*;
-import sn.seck.GestionCliniqueKissi.Repository.ConsultationRepository;
-import sn.seck.GestionCliniqueKissi.Repository.MedecinRepository;
-import sn.seck.GestionCliniqueKissi.Repository.PatientRepository;
-import sn.seck.GestionCliniqueKissi.Repository.RendezvousRepository;
-import sn.seck.GestionCliniqueKissi.Service.AuthenticationService;
+import sn.seck.GestionCliniqueKissi.Repository.*;
 import sn.seck.GestionCliniqueKissi.Service.PatientService;
 import sn.seck.GestionCliniqueKissi.Service.UserService;
-import sn.seck.GestionCliniqueKissi.auth.RegisterRequest;
 
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
 @SpringBootApplication()
-@CrossOrigin(origins = "*")
-@Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {"sn.seck.GestionCliniqueKissi.Service"})
-@EnableJpaRepositories(value = "sn.seck.GestionCliniqueKissi.Repository")
+@EnableJpaRepositories("sn.seck.GestionCliniqueKissi.Repository")
+//@EnableTransactionManagement
+@EntityScan(basePackages={"sn.seck.GestionCliniqueKissi.Model"})
 
-@ComponentScan(basePackages = "sn.seck.GestionCliniqueKissi.Model")
+@ComponentScan(basePackages = {"sn.seck.GestionCliniqueKissi.Model"})
 @OpenAPIDefinition
 public class GestionCliniqueKissiApplication {
 
@@ -44,7 +41,6 @@ public class GestionCliniqueKissiApplication {
 		private RendezvousRepository rendezvousRepository;
 		private ConsultationRepository consultationRepository;
 		private PatientRepository patientRepository;
-
 	public GestionCliniqueKissiApplication(MedecinRepository medecinRepository,
                                            UserService userService,
                                            PatientService patientService, RendezvousRepository rendezvousRepository, ConsultationRepository consultationRepository, PatientRepository patientRepository) {
@@ -94,13 +90,9 @@ public class GestionCliniqueKissiApplication {
 
 			patientRepository.saveAndFlush(patient);
 
-
-
-
-
-		userService.addNewUser(new Users(1, "moha", "diagana", "mdiaganaisidk@gmail.com", "1234", Role.ADMIN));
-		userService.addNewUser(new Users(2, "mohamed bocar", "samba", "assisi@gmail.sn", "passer123", Role.User));
-		userService.addNewUser(new Users(4, "da bocar", "cheikh", "admin@gmail.sn", "123", Role.ADMIN));
+		userService.createUser(new Users(1, "moha", "diagana", "mdiaganaisidk@gmail.com", "1234", Role.ADMIN));
+		userService.createUser(new Users(2, "mohamed bocar", "samba", "assisi@gmail.sn", "passer123", Role.User));
+		userService.createUser(new Users(4, "da bocar", "cheikh", "admin@gmail.sn", "123", Role.ADMIN));
 		/*Liste des Medecins*/
 		Stream.of("Bocar", "zeyade", "BRAHIME", "youssouf")
 				.forEach(name -> {
@@ -131,11 +123,13 @@ public class GestionCliniqueKissiApplication {
 					//Rendezvous rendezvous1 = rendezvousRepository.findById(1).orElse(null);
 
 					Consultation consu = new Consultation();
-					consu.setId(1);
+					consu.setIdconsultation(1);
 					consu.setCodecons("c0025");
 					consu.setDateconsultation(new Date());
 					consu.setRapport("le Rapport de la semaine est.......:"+ consu.getRapport());
+					//consu.setPrixconsultation(150000);
 					consultationRepository.save(consu);
+
 				});
 
 

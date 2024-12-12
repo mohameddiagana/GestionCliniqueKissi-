@@ -39,7 +39,7 @@ build docker image:
   services:
     - docker:dind
   script:
-    #- docker build -t $DOCKER_USER/thymeleaf-springboot:0.0.1 .
+    #- docker build -t $DOCKER_USER/GestionCliniqueKissi-0.0.1 .
     - docker compose build
     - docker image ls
     - docker tag GestionCliniqueKissi-0.0.1 $DOCKER_HUB_USER/GestionCliniqueKissi-0.0.1

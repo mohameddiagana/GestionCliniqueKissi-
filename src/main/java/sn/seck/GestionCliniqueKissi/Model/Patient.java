@@ -54,7 +54,7 @@ public class Patient implements Serializable {
     @Column(name = "age")
     private int age;
 
-    @OneToMany(mappedBy = "patient" ,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient" ,fetch = FetchType.EAGER)
     private List<Rendezvous> rendezvous;
 
 

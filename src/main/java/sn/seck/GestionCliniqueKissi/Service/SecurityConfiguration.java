@@ -30,7 +30,7 @@ import static sn.seck.GestionCliniqueKissi.Model.Role.User;
 @EnableWebSecurity
 @RequiredArgsConstructor
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
-//@EnableMethodSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
     private final JWTAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -43,13 +43,12 @@ public class SecurityConfiguration {
                 .formLogin(httpSecurityFormLoginConfigurer ->
                         httpSecurityFormLoginConfigurer.loginPage("/login"))
                 .authorizeHttpRequests()
-//               .requestMatchers("/USER/**").hasAnyRole("ADMIN")
-                .requestMatchers(POST,"/login").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/login").permitAll()
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyRole("USER")
                 .requestMatchers(HttpMethod.POST,"localhost:7075/api/v1/auth/patient/liste/**"
-                ,"/swagger-ui.html","/swagger-ui/**","/v2/api-docs"," /v3/api-docs","/swagger-resources","/v3/api-docs/**",
-                        "/swagger-ui/*","/configuration/security/**")
+                ,"/swagger-ui.html","/swagger-ui/**","/v2/api-docs"," /v3/api-docs","/swagger-resources","/swagger-resources/**","/v3/api-docs/**",
+                        "/swagger-ui/**","/configuration/security/**")
                 .permitAll()
 
 
@@ -74,9 +73,9 @@ public class SecurityConfiguration {
                 .logout(logout->
                         logout.logoutUrl("/api/v1/auth/logout")
                                 .permitAll()
-//                                .addLogoutHandler(logoutHandler)
-//                                .logoutSuccessHandler((request, response, authentication)->
-//                                        SecurityContextHolder.clearContext())
+                            // .addLogoutHandler(logoutHandler)
+                              .logoutSuccessHandler((request, response, authentication)->
+                                       SecurityContextHolder.clearContext())
 
                 );
 

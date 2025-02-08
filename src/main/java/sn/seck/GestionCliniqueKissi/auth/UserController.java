@@ -1,6 +1,8 @@
 package sn.seck.GestionCliniqueKissi.auth;
 
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sn.seck.GestionCliniqueKissi.Model.Role;
@@ -9,9 +11,9 @@ import sn.seck.GestionCliniqueKissi.Repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(path = "localhost:7075/api/v1/auth/users")
+@RequestMapping(path = "localhost:7075/api/v1/auth/")
 @Slf4j
 public class UserController {
 
@@ -21,23 +23,9 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    // Obtenir tous les utilisateurs
-    @GetMapping
-    public List<Users> getAllUsers() {
-        log.info("search all users");
-        return userRepository.findAll();
-    }
-
-    // Obtenir un utilisateur par son ID
-    @GetMapping("/users/{id}")
-    public Optional<Users> getUserById(@PathVariable int id) {
-        log.info("get by USerId");
-        return userRepository.findById(id);
-    }
-
     // Créer un nouvel utilisateur avec un rôle spécifique
-    @PostMapping
-    public Users createUser( @RequestBody Users user) {
+    @PostMapping("/users")
+    public Users createUser(@Valid @RequestBody Users user) {
         log.info("create user {}", user);
         return userRepository.save(user);
 
@@ -55,10 +43,4 @@ public class UserController {
         return null;  // ou gestion d'erreur
     }
 
-    // Supprimer un utilisateur
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable int id) {
-        log.info("delete userid");
-        userRepository.deleteById(id);
-    }
 }

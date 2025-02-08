@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@CrossOrigin(origins = "*")/*http://localhost:4200*/
+//@CrossOrigin(origins = "http://localhost:4200")/*http://localhost:4200*/
 @Slf4j
 @Controller
-@RequestMapping("localhost:7075/api/v1/auth/patient/liste")
+@RequestMapping(path = "localhost:7075/api/v1/auth/patient/liste")
 public class PatientController {
     //@Autowired
     private PatientRepository patientRepository;

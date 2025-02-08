@@ -1,6 +1,5 @@
-<doctype html>
+<!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8"/>
@@ -30,8 +29,8 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-md-7">
                     <h3>BIENVENU-DANS LA PAGE LOGIN <strong>Colorlib</strong></h3>
-<!--                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>-->
-                    <form th:action ="@{/login}" method="POST">
+                    <!--                    <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>-->
+                    <form th:action="@{/login}" method="POST">
                         <div class="form-group first">
                             <label for="username">Username</label>
                             <input type="email" class="form-control" id="username">
@@ -41,9 +40,9 @@
                             <input type="password" class="form-control" id="password">
                         </div>
 
-<!--                        <form name="logout" th:action="@{/logout}" method="POST">-->
-<!--                            <input  type="submit" value="Deconnexion"/>-->
-<!--                        </form>-->
+                        <!--                        <form name="logout" th:action="@{/logout}" method="POST">-->
+                        <!--                            <input  type="submit" value="Deconnexion"/>-->
+                        <!--                        </form>-->
 
                         <div class="d-flex mb-5 align-items-center">
                             <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
@@ -71,4 +70,5 @@
 <script th:src="@{../public/login/js/bootstrap.min.js"></script>
 <script th:src="@{../public/login/js/main.js"></script>
 </body>
+
 </html>

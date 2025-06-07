@@ -24,10 +24,24 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - "5050:80"
+    - "${PGADMIN_PORT:-5050}:80"
+      #- "5050:80"
+
+
     networks:
       - postgres
     restart: unless-stopped
+#  smtp4dev:
+#      image: rnwood/smtp4dev:v3
+#      restart: always
+#      ports:
+#        - 9025:25
+        # Change the number before : to the port the web interface should be accessible on
+        #- '5000:80'
+        # Change the number before : to the port the SMTP server should be accessible on
+       #'9081:80 navigateur'
+        # Change the number before : to the port the IMAP server should be accessible on
+
 
 networks:
   postgres:

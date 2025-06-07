@@ -41,5 +41,5 @@ public class Rendezvous implements Serializable {
     @JoinColumn(name = "medecin_id")
     private Medecin medecin;
 
-
 }
+

@@ -3,6 +3,8 @@ package sn.seck.GestionCliniqueKissi.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +16,7 @@ import java.util.List;
 @ToString
 @Builder
 @Table(name = "medecin")
-public class Medecin {
+public class Medecin implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
@@ -33,5 +35,12 @@ public class Medecin {
 
     @OneToMany(mappedBy = "medecin",fetch = FetchType.LAZY)
     private List<Rendezvous> rendezvous ;
+
+    @OneToMany(mappedBy = "medecin",cascade = CascadeType.ALL)
+    private List<Medicament> medicament;
+
+    @OneToMany(mappedBy = "medecin",cascade = CascadeType.ALL)
+    private List<Ordonnance> ordonnances = new ArrayList<>();
+
 
 }

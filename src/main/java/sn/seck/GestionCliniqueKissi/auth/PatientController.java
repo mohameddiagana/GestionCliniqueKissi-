@@ -1,27 +1,33 @@
 package sn.seck.GestionCliniqueKissi.auth;
 
+import javafx.application.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import sn.seck.GestionCliniqueKissi.Model.Patient;
+import sn.seck.GestionCliniqueKissi.Model.Rendezvous;
 import sn.seck.GestionCliniqueKissi.Repository.PatientRepository;
+import sn.seck.GestionCliniqueKissi.Repository.RendezvousRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
-//@CrossOrigin(origins = "http://localhost:4200")/*http://localhost:4200*/
+@CrossOrigin(origins = "http://localhost:4200") // autoriser le frontend Angular
 @Slf4j
 @Controller
-@RequestMapping(path = "localhost:7075/api/v1/auth/patient/liste")
+@RequestMapping(path = "/api/v1/auth/patient/liste")
 public class PatientController {
     //@Autowired
     private PatientRepository patientRepository;
+    private RendezvousRepository rendezvousRepository;
 
-    public PatientController(PatientRepository patientRepository) {
+    public PatientController(PatientRepository patientRepository, RendezvousRepository rendezvousRepository) {
         this.patientRepository = patientRepository;
 
+        this.rendezvousRepository = rendezvousRepository;
     }
 
 
@@ -29,10 +35,12 @@ public class PatientController {
     public String getPatientList(ModelMap map) {
         List<Patient> getPatientList = patientRepository.findAll( );
         log.info("Fetching all patients");
+        //log.debug("debug all patients");
         map.addAttribute("list_patients", patientRepository.findAll( ));//Pour la liste
+       // map.addAttribute("list_rendezvous", rendezvousRepository.findAll( ));//Pour la liste
         map.addAttribute("Patient", new Patient( ));//Pour le formulaire
-      return "/patient/liste";
-      // return getPatientList.toString();
+      return "/api/v1/auth/patient/liste";
+//      return getPatientList.toString();
       
  }
 
@@ -48,15 +56,9 @@ public class PatientController {
         return "redirect:/api/v1/auth/patient/liste";
 
     }
-
-//    @DeleteMapping("/patient/{idpatient}")
-//    public void delete(@PathVariable String idpatient) {
-//        patientRepository.delete(code);
-//    }
-
     @RequestMapping(value = "/patient/add",method = RequestMethod.POST)
 
-    public String NouveauPatient(int idpatient, int codep, String nomp, String prenom, String adresse, String email, String tel, String sexe, LocalDate datenaissance, String profession, int CIN, int age/*String rendezvous*/) {//ajout et mise à jour
+    public String NouveauPatient(int idpatient, int codep, String nomp, String prenom, String adresse, String email, String tel, String sexe, LocalDate datenaissance, String profession, int CIN, int age,String rendezvous) {//ajout et mise à jour
         log.info("Saving New Patient in database{}", patientRepository.findByPatient(nomp));
         Patient patient = new Patient( );
         patient.setIdpatient(idpatient);
@@ -66,7 +68,9 @@ public class PatientController {
         patient.setEmail(email);
         patient.setTel(tel);
         patient.setSexe(sexe);
-
+        Rendezvous rv = new Rendezvous();
+       patient.setRendezvous(new ArrayList<Rendezvous>());
+       patient.setConsultations(new ArrayList<>());
         patient.setDatenaissance(datenaissance);
         patient.setAdresse(adresse);
         patient.setProfession(profession);
@@ -74,6 +78,7 @@ public class PatientController {
         patient.setAge(age);
         try {
             patientRepository.saveAndFlush(patient);
+            rendezvousRepository.saveAndFlush(rv);
         } catch (Exception ex) {
             ex.printStackTrace( );
 

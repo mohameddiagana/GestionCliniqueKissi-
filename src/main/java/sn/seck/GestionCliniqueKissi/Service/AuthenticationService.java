@@ -1,6 +1,7 @@
 package sn.seck.GestionCliniqueKissi.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,6 @@ import sn.seck.GestionCliniqueKissi.auth.RegisterRequest;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
-
    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;

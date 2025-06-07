@@ -1,6 +1,7 @@
 package sn.seck.GestionCliniqueKissi.auth;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.XSlf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

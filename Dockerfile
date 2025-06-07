@@ -1,20 +1,16 @@
 FROM openjdk:17-jdk-slim
 
 LABEL maintainer="mohamediagana mohameddiagana807@gmail.com"
+WORKDIR /build
 
-#WORKDIR /webapp
-#
-#COPY . .
-#
-#RUN npm cache clean --force && npm install -f && npm run build
-#
-#FROM nginx:alpine
-#
-#COPY nginx.conf /etc/nginx/nginx.conf
+COPY target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar/
 
-EXPOSE 7075
+COPY . ./
+EXPOSE 8135
 
-ADD target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar
+#ADD target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar
 
 # Run the application.
-ENTRYPOINT ["ng", "server","--host","0.0.0.0", "--disable-host-checked"]
+ENTRYPOINT ["java" , " -jar" , "GestionCliniqueKissi.jar"]
+#gestioncliniquekissi:0.0.1
+#CMD

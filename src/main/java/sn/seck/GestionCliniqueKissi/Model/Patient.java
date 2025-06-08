@@ -23,6 +23,9 @@ import java.util.*;
 @Table(name = "patient",
 uniqueConstraints =
 @UniqueConstraint(columnNames = "email"))
+/***
+UniqueConstraint rend email unique
+**/
 @EntityListeners(AuditingEntityListener.class)
 public class Patient implements Serializable {
     @Id
@@ -34,8 +37,7 @@ public class Patient implements Serializable {
     private String nomp;
     @Column(name = "prenom", length = 200)
     private String prenom;
-    @Column(name = "email", length = 250)
-    @Email(message = "Email ne dois pas etre null")
+    @Column(name = "email", length = 200)
     private String email;
     @Column(name = "tel",length = 200)
     private String tel;
@@ -57,6 +59,15 @@ public class Patient implements Serializable {
     @OneToMany(mappedBy = "patient" ,fetch = FetchType.EAGER)
     private List<Rendezvous> rendezvous;
 
+    @OneToMany(mappedBy = "patient" ,fetch = FetchType.EAGER)
+    private List<Hospitalisation> hospitalisationslList;
+
+    // Relation OneToMany avec Consultation
+    @OneToMany(mappedBy = "patient" ,fetch = FetchType.EAGER)
+    private List<Consultation> consultations = new ArrayList<>();
+
+
+
 
     public Patient(int idpatient, int codep, String nomp, String prenom, String email, String tel, String sexe, LocalDate datenaissance, String adresse, String profession, int CIN, int age, String rendezvous) {
     }
@@ -65,18 +76,18 @@ public class Patient implements Serializable {
         return "Patient(idpatient=" + this.getIdpatient() + ", codep=" + this.getCodep() + ", nomp=" + this.getNomp() + ", prenom=" + this.getPrenom() + ", email=" + this.getEmail() + ", tel=" + this.getTel() + ", sexe=" + this.getSexe() + ", datenaissance=" + this.getDatenaissance() + ", adresse=" + this.getAdresse() + ", profession=" + this.getProfession() + ", CIN=" + this.getCIN() + ", age=" + this.getAge() + ",rendezvous="+ this.getRendezvous();
     }
     /*METHODE POUR CALCULER Age PAARTIR DATENAISSANCE*/
-   public static int getYears(Date datenaissance)
-    {
-        Calendar curr = Calendar.getInstance();
-        Calendar birth = Calendar.getInstance();
-        birth.setTime(datenaissance);
-        int yeardiff = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
-        curr.add(Calendar.YEAR,-yeardiff);
-        if(birth.after(curr))
-        {
-            yeardiff = yeardiff - 1;
-        }
-        return yeardiff;
+//   public static int getYears(Date datenaissance)
+//    {
+//        Calendar curr = Calendar.getInstance();
+//        Calendar birth = Calendar.getInstance();
+//        birth.setTime(datenaissance);
+//        int yeardiff = curr.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+//        curr.add(Calendar.YEAR,-yeardiff);
+//        if(birth.after(curr))
+//        {
+//            yeardiff = yeardiff - 1;
+//        }
+//        return yeardiff;
        //return getYears(datenaissance);
     }
 
@@ -84,6 +95,6 @@ public class Patient implements Serializable {
 
 
 
-}
+
 
 

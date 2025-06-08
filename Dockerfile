@@ -1,10 +1,16 @@
 FROM openjdk:17-jdk-slim
 
 LABEL maintainer="mohamediagana mohameddiagana807@gmail.com"
+WORKDIR /build
 
-EXPOSE 7075
+COPY target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar/
 
-ADD target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar
+COPY . ./
+EXPOSE 8135
+
+#ADD target/GestionCliniqueKissi.jar GestionCliniqueKissi.jar
 
 # Run the application.
-ENTRYPOINT ["ng", "server","--host","0.0.0.0", "--disable-host-checked"]
+ENTRYPOINT ["java" , " -jar" , "GestionCliniqueKissi.jar"]
+#gestioncliniquekissi:0.0.1
+#CMD

@@ -2,15 +2,16 @@ package sn.seck.GestionCliniqueKissi.Service;
 
 import org.springframework.stereotype.Service;
 import sn.seck.GestionCliniqueKissi.Model.Medecin;
-import sn.seck.GestionCliniqueKissi.Model.Patient;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface MedecinService {
 
     Medecin addNewMedecin(Medecin medecin);
 
-    Medecin getMedecin(String lastname);
+     Optional <Medecin> getMedecinById(long id);
     List<Medecin> listMedecin();
+     void deleteMedecinById(long id);
 }

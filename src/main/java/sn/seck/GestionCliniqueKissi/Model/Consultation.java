@@ -17,12 +17,17 @@ import java.util.Date;
 public class Consultation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idconsultation;
+    private long id;
     @Column(name = "codecons",length = 150)
     private String codecons;
     @Temporal(TemporalType.DATE)    /*par defaut TIMESTAm*/
     private Date dateconsultation;
-    @Column(name = "rapport",length = 150)
+    @Column(name = "rapport",length = 100,nullable = false)
+//    @Lob
     private String rapport;
-   // private int prixconsultation;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_idpatient")
+    private Patient patient;
+
 }

@@ -1,16 +1,12 @@
 package sn.seck.GestionCliniqueKissi.auth;
 
-import jakarta.mail.internet.MimeMessage;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +35,7 @@ public class EmailController {
         message.setFrom(frommail);
         message.setTo(mail);
         message.setSubject("Gestion CliniqueKissi");
-        message.setText("juste the simple email for DIAGANA");
+        message.setText("dooooooooooo the simple email for DIAGANA");
 
         mailSender.send(message);
         //return "success !";
@@ -49,28 +45,27 @@ public class EmailController {
             throw new RuntimeException(e.getMessage());
             //return e.getMessage();
         }
+
+
     }
 
-    @RequestMapping("/send-email-with-attachement")
-    public String sendEmailWithAttachement() {
-        try{
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper help = new MimeMessageHelper(mimeMessage, true);
-
-            help.setFrom("mohameddiagana807@gmail.com");
-            help.setTo("mohameddiagana807@gmail.com");
-            help.setSubject("CliniqueKissi");
-            help.setText("Java email For attachement!");
-            help.addAttachment("exemple de motif.png",new File("D:\\honorableSeck\\exemple de motif.png"));
-
-
-            mailSender.send(mimeMessage);
-            return "success !";
-
-        }catch (Exception e){
-            return e.getMessage();
-        }
+//    @RequestMapping("/send-email-with-attachement")
+//    public String sendEmailWithAttachement() {
+//        try{
+//            MimeMessage mimeMessage = mailSender.createMimeMessage();
+//            MimeMessageHelper help = new MimeMessageHelper(mimeMessage, true);
+//
+//            help.setFrom("mohameddiagana807@gmail.com");
+//            help.setTo("mohameddiagana807@gmail.com");
+//            help.setSubject("CliniqueKissi");
+//            help.setText("Java email For attachement!");
+//            help.addAttachment("exemple de motif.png",new File("D:\\honorableSeck\\exemple de motif.png"));
+//
+//
+//            mailSender.send(mimeMessage);
+//            return "success !";
+//
+//        }catch (Exception e){
+//            return e.getMessage();
+//        }
     }
-
-
-}

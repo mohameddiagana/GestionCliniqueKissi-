@@ -1,19 +1,16 @@
 package sn.seck.GestionCliniqueKissi.Service;
-
-import org.springframework.stereotype.Repository;
-import sn.seck.GestionCliniqueKissi.Model.Role;
+import org.springframework.stereotype.Service;
 import sn.seck.GestionCliniqueKissi.Model.Users;
 
 import java.util.List;
-@Repository
+@Service
 public interface UserService {
+        Users getUserById(int iduser);
+        List<Users> getAllUsers();
+        Users save(Users user);
+        void deleteUserByid(int iduser);
 
-    Users createUser(Users user);
 
-    List<Users> listuser();
-    //Role addNewRole(Role role);
-    //Role findRoleBYRoleName(String roleName);
-   // void addRoleToUser(String roleName, String user);
-   //List<Role> listRole();
+
 
 }

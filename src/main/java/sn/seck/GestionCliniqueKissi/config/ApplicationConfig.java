@@ -1,6 +1,8 @@
 package sn.seck.GestionCliniqueKissi.config;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,12 +36,14 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration conf) throws Exception {
-        return conf.getAuthenticationManager();
+    //@Autowired
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
 
 
     }
     @Bean
+//    @Autowired
     public PasswordEncoder passwordEncoder() {
         return  new BCryptPasswordEncoder();
     }

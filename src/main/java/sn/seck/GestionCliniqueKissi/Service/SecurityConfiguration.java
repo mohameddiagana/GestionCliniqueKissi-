@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.endpoint.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.SecurityConfigurer;
@@ -15,6 +16,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -29,27 +32,28 @@ import static sn.seck.GestionCliniqueKissi.Model.Role.User;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-//@EnableMethodSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
     private final JWTAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 //    private final LogoutHandler logoutHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-               // .cors(AbstractHttpConfigurer::disable)
+
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(httpSecurityFormLoginConfigurer ->
-                        httpSecurityFormLoginConfigurer.loginPage("/login"))
+                        httpSecurityFormLoginConfigurer.loginPage("/login"))/*URL GET POUR AFFICHER LA PAGE*/
                 .authorizeHttpRequests()
-//               .requestMatchers("/USER/**").hasAnyRole("ADMIN")
-                .requestMatchers(POST,"/login").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
-                .requestMatchers(HttpMethod.POST,"localhost:7075/api/v1/auth/patient/liste/**"
-                ,"/swagger-ui.html","/swagger-ui/**","/v2/api-docs"," /v3/api-docs","/swagger-resources","/v3/api-docs/**",
-                        "/swagger-ui/*","/configuration/security/**")
+                .requestMatchers(HttpMethod.POST,"/login","/logout","/RegisterRequest").permitAll()
+                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                .requestMatchers("/users/**").hasAnyRole("USER")
+                .requestMatchers(HttpMethod.POST,"localhost:4200/"
+//                 .requestMatchers(HttpMethod.POST,"http://localhost:8135/api/v1/auth/patient/liste")
+                ,"/swagger-ui.html","/swagger-ui/**","/v2/api-docs"," /v3/api-docs",
+                        "/swagger-resources","/swagger-resources/**","/v3/api-docs/**",
+                        "/swagger-ui/**","/configuration/security/**")
                 .permitAll()
 
 
@@ -64,6 +68,7 @@ public class SecurityConfiguration {
 //                .requestMatchers(DELETE, "/api/v1/admin/**").hasAuthority(ADMIN_DELETE.name())
 //                .requestMatchers(POST, "/api/v1/admin/**").hasAuthority(ADMIN_CREATE.name())
 //                .requestMatchers(PUT, "/api/v1/admin/**").hasAuthority(ADMIN_UPDATE.name())
+                
 
                 .anyRequest()
                 .authenticated()
@@ -74,14 +79,29 @@ public class SecurityConfiguration {
                 .logout(logout->
                         logout.logoutUrl("/api/v1/auth/logout")
                                 .permitAll()
-//                                .addLogoutHandler(logoutHandler)
-//                                .logoutSuccessHandler((request, response, authentication)->
-//                                        SecurityContextHolder.clearContext())
+                            // .addLogoutHandler(logoutHandler)
+                              .logoutSuccessHandler((request, response, authentication)->
+                                       SecurityContextHolder.clearContext())
+//        public void addCorsMappings(CorsRegistry registry) {
+//            registry.addMapping("/api/**") // toutes les routes de l'API
+//                    .allowedOrigins("http://localhost:4200") // équivalent de allowedOrigins
+//                    .allowedMethods("GET", "POST", "PUT", "DELETE") // autorise ces méthodes HTTP
+//                    .allowedHeaders("*") // tous les headers autorisés
+//                    .allowCredentials(true); // autorise les cookies (si besoin)
+//        }
+
 
                 );
-
 
       return httpSecurity.build();
 
 
-}}
+
+
+}
+//    @Bean
+//    public BCryptPasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//
+//    }
+}

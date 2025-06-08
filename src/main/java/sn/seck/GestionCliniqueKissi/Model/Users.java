@@ -1,6 +1,7 @@
 package sn.seck.GestionCliniqueKissi.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +35,7 @@ public class Users implements UserDetails {
     @Column(name = "email",length = 250)
     private String email;
     @Column(name = "password",length = 100)
+    @NotNull(message = "Password cannot be null")
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
